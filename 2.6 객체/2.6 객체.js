@@ -119,5 +119,43 @@ const zerocho = {
 }
 
 //객체 속성에 접근
+const name ='date';
 console.log(zerocho.name);
 console.log(zerocho['name']);
+console.log(zerocho[name]); //zerocho['date']와 같음
+console.log(zerocho.hello); //undefined
+
+//객체 속성 수정하기
+zerocho.gender = 'F';
+console.log(zerocho.gender);
+
+//객체 소겅 제거하기
+delete zerocho.gender;
+console.log(zerocho.gender);
+
+//메서드 이해하기
+//객체의 속성 값으로 함수가 들어가면 이 속성을 특별히 메서드라고 함
+const debug = {
+    log: function(value){
+        console.log(value);
+    },
+}
+debug.log('Hello, Method');
+
+//객체 간 비교하기
+const compareA = {name: 'zerocho'};
+const array = [1, 2, compareA];
+console.log(compareA === array[2]);    //true
+
+//참조와 복사
+//참조
+const referenceA = { name: 'zerocho'};
+const referenceB = referenceA;
+referenceA.name='hero';
+console.log(referenceB.name);    //변수 a와 b가 같은 객체를 참조하고 있음. 객체 간에 참조 관계가 있음
+
+//복사
+let copyA = 'zerocho';
+let copyB = copyA;
+copyA = 'hero';
+console.log(copyB);
