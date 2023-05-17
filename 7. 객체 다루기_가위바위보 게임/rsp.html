@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>가위바위보</title>
+    <style>
+        #computer{
+            width: 142px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="computer"></div>
+<div>
+    <button id="scissors" class="btn">가위</button>
+    <button id="rock" class="btn">바위</button>
+    <button id="paper" class="btn">보</button>
+</div>
+<div id="score">0</div>
+<script>
+    const $computer = document.querySelector('#computer');
+    const $score = document.querySelector('#score');
+    const $rock = document.querySelector('#rock');
+    const $scissors = document.querySelector('#scissors');
+    const $paper = document.querySelector('#paper');
+    const IMG_URL = './rsp.png';
+    $computer.style.background = `url(${IMG_URL}) 0 0`; // 가위
+    $computer.style.background = `url(${IMG_URL}) -220 0`; // 바위
+    $computer.style.background = `url(${IMG_URL}) -440 0`; // 보
+    $computer.style.backgroundSize = 'auto 200px';
+
+    // x 좌표를 하나의 객체로 묶어서 저장하기
+    const rspX = {
+        scissors: '0',  //가위
+        rock: '-220px', //바위
+        paper: '-440px' //보
+    }
+
+    //컴퓨터의 손 이미지를 바꾸는 함수
+    let computerChoice = 'scissors';
+    const changeComputerHand = () => {
+        if(computerChoice === 'rock'){
+            computerChoice = 'scissors';
+        }else if(computerChoice === 'scissors'){
+            computerChoice = 'paper'
+        }else if(computerChoice === 'paper'){
+            computerChoice = 'rock';
+        }
+        $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+        $computer.style.backgroundSize = 'auto 200px';
+        setTimeout(changeComputerHand, 50);
+    }
+    setTimeout(changeComputerHand, 50);
+
+
+</script>
+</body>
+</html>
