@@ -16,25 +16,7 @@
     </style>
 </head>
 <body>
-<!--
-<table>
-    <tr>
-        <td id="td00"></td>
-        <td id="td01"></td>
-        <td id="td02"></td>
-    </tr>
-    <tr>
-        <td id="td10"></td>
-        <td id="td11"></td>
-        <td id="td12"></td>
-    </tr>
-    <tr>
-        <td id="td20"></td>
-        <td id="td21"></td>
-        <td id="td22"></td>
-    </tr>
-</table>
--->
+
 <script>
     const { body } = document;
     const $table = document.createElement('table');
@@ -43,16 +25,11 @@
     let turn = 'O';
 
     const checkWinner = (target) => {
-        let rowIndex;
-        let cellIndex;
-        rows.forEach((row, ri) => {
-            row.forEach((cell, ci)=>{
-                if(cell === target){
-                    rowIndex = ri;
-                    cellIndex = ci;
-                }
-            });
-        });
+        const rowIndex = target.parentNode.rowIndex;
+        const cellIndex = target.cellIndex;
+        console.log(Array.from(target.parentNode.children));
+        console.log(Array.from(target.parentNode.children).indexOf(target));
+
         // 세 칸 다 채워졌나?
         let hasWinner = false;
         // 가로 줄 검사
@@ -92,18 +69,24 @@
     const callback = (event) =>{
         if(event.target.textContent !== ''){    //칸이 이미 채워져 있는가?
             console.log('빈칸이 아닙니다.');
-        }else{
-            console.log('빈칸입니다.');
-            event.target.textContent = turn;
-            //승부 판단하기
-            if(checkWinner(event.target)){
-                $result.textContent = `${turn}님이 승리!`;
-                $table.removeEventListener('click', callback);
-                return;
-            }
-            //승자가 없으면
-            turn = turn === 'X' ? 'O' : 'X';
+            return;
         }
+        // 빈칸이면
+        console.log('빈칸입니다.');
+        event.target.textContent = turn;
+        const hasWinner = checkWinner(event.target);
+        //승자가 있으면
+        if(hasWinner){
+            $result.textContent = `${turn}님의 승리!`;
+            $table.removeEventListener('click',callback);
+        }
+        //승자가 없으면
+        const draw = rows.flat().every((cell) => cell.textContent);
+        if(draw){
+            $result.textContent = `무승부`;
+            return;
+        }
+        turn = turn === 'X' ? 'O' : 'X';
     };
 
     for(let i = 1; i <=3; i++){
